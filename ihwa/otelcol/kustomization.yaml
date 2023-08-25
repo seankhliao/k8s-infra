@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+buildMetadata:
+  - managedByLabel
+  - originAnnotations
+
+namespace: otelcol
+commonLabels:
+  app.kuberentes.io/name: otelcol
+labels:
+  - pairs:
+      app.kubernetes.io/managed-by: kustomize
+    includeTemplates: true
+
+generators:
+  - |
+    apiVersion: viaduct.ai/v1
+    kind: ksops
+    metadata:
+      name: softserve
+      annotations:
+        config.kubernetes.io/function: |
+          exec:
+            path: /opt/kustomize/ksops
+    files:
+      - secrets.enc.k8s.yaml
+
+resources:
+  - ../../base/otelcol
