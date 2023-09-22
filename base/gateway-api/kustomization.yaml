@@ -4,10 +4,24 @@ kind: Kustomization
 namespace: gateway-system
 commonLabels:
   app.kubernetes.io/name: gateway-api
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
 
 resources:
-  - experimental-install.yaml
+  - admissionregistration_k8s_io_v1__validatingwebhookconfiguration____gateway-api-admission.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____gatewayclasses.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____gateways.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____grpcroutes.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____httproutes.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____referencegrants.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____tcproutes.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____tlsroutes.gateway.networking.k8s.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____udproutes.gateway.networking.k8s.io.yaml
+  - apps_v1__deployment__gateway-system__gateway-api-admission-server.yaml
+  - batch_v1__job__gateway-system__gateway-api-admission-patch.yaml
+  - batch_v1__job__gateway-system__gateway-api-admission.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____gateway-api-admission.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____gateway-api-admission.yaml
+  - rbac_authorization_k8s_io_v1__role__gateway-system__gateway-api-admission.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__gateway-system__gateway-api-admission.yaml
+  - v1__namespace____gateway-system.yaml
+  - v1__service__gateway-system__gateway-api-admission-server.yaml
+  - v1__serviceaccount__gateway-system__gateway-api-admission.yaml

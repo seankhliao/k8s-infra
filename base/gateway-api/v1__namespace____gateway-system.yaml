@@ -1,0 +1,7 @@
+#
+# config/webhook/0-namespace.yaml
+#
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gateway-system

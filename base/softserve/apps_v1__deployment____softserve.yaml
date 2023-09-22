@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: softserve
+spec:
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      enableServiceLinks: false
+      containers:
+      - name: softserve
+        image: ghcr.io/charmbracelet/soft-serve:v0.5.4
+        envFrom:
+        - secretRef:
+            name: softserve
+        ports:
+        - name: git
+          hostPort: 23231
+          containerPort: 23231
+        volumeMounts:
+        - mountPath: /soft-serve
+          name: data
+      volumes:
+      - name: data
+        hostPath:
+          path: /opt/volumes/softserve

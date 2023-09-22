@@ -1,12 +1,31 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: envoy-gateway-system
 commonLabels:
   app.kubernetes.io/name: envoy-gateway
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
 
 resources:
-  - install.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____authenticationfilters.gateway.envoyproxy.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____envoypatchpolicies.gateway.envoyproxy.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____envoyproxies.config.gateway.envoyproxy.io.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____ratelimitfilters.gateway.envoyproxy.io.yaml
+  - apps_v1__deployment__envoy-gateway-system__envoy-gateway.yaml
+  - batch_v1__job__envoy-gateway-system__eg-gateway-helm-certgen.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____eg-gateway-helm-envoy-gateway-role.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____eg-gateway-helm-proxy-role.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole__envoy-gateway-system__eg-gateway-helm-metrics-reader.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____eg-gateway-helm-envoy-gateway-rolebinding.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____eg-gateway-helm-proxy-rolebinding.yaml
+  - rbac_authorization_k8s_io_v1__role__envoy-gateway-system__eg-gateway-helm-certgen.yaml
+  - rbac_authorization_k8s_io_v1__role__envoy-gateway-system__eg-gateway-helm-infra-manager.yaml
+  - rbac_authorization_k8s_io_v1__role__envoy-gateway-system__eg-gateway-helm-leader-election-role.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__envoy-gateway-system__eg-gateway-helm-certgen.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__envoy-gateway-system__eg-gateway-helm-infra-manager.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__envoy-gateway-system__eg-gateway-helm-leader-election-rolebinding.yaml
+  - v1__configmap__envoy-gateway-system__envoy-gateway-config.yaml
+  - v1__namespace____envoy-gateway-system.yaml
+  - v1__service__envoy-gateway-system__envoy-gateway-metrics-service.yaml
+  - v1__service__envoy-gateway-system__envoy-gateway.yaml
+  - v1__serviceaccount__envoy-gateway-system__eg-gateway-helm-certgen.yaml
+  - v1__serviceaccount__envoy-gateway-system__envoy-gateway.yaml

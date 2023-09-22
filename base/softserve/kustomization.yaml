@@ -4,11 +4,7 @@ kind: Kustomization
 namespace: softserve
 commonLabels:
   app.kubernetes.io/name: softserve
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
 
 resources:
-  - namespace.k8s.yaml
-  - deployment.k8s.yaml
+  - apps_v1__deployment____softserve.yaml
+  - v1__namespace____softerve.yaml

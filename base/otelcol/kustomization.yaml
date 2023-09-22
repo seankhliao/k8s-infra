@@ -4,10 +4,6 @@ kind: Kustomization
 namespace: otelcol
 commonLabels:
   app.kubernetes.io/name: otelcol
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
 
 configMapGenerator:
   - name: otelcol
@@ -15,6 +11,6 @@ configMapGenerator:
       - config.yaml
 
 resources:
-  - deployment.k8s.yaml
-  - namespace.k8s.yaml
-  - service.k8s.yaml
+  - apps_v1__deployment____otelcol.yaml
+  - v1__namespace____otelcol.yaml
+  - v1__service____ingest.yaml

@@ -1,10 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
+buildMetadata:
+  - managedByLabel
+  - originAnnotations
 
 generators:
   - |
@@ -22,4 +21,5 @@ generators:
 resources:
   - ../../base/envoy-gateway
   - ../../base/gateway-api
-  - gateway.k8s.yaml
+  - gateway_networking_k8s_io_v1beta1__gateway__envoy-gateway-system__default.yaml
+  - gateway_networking_k8s_io_v1beta1__gatewayclass____envoyproxy.yaml

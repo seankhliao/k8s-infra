@@ -1,0 +1,25 @@
+# Source: gateway-helm/templates/envoy-gateway-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: envoy-gateway
+  namespace: 'envoy-gateway-system'
+  labels:
+    control-plane: envoy-gateway
+    helm.sh/chart: gateway-helm-v0.0.0-latest
+    app.kubernetes.io/name: gateway-helm
+    app.kubernetes.io/instance: eg
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    control-plane: envoy-gateway
+    app.kubernetes.io/name: gateway-helm
+    app.kubernetes.io/instance: eg
+  ports:
+  - name: grpc
+    port: 18000
+    targetPort: 18000
+  - name: ratelimit
+    port: 18001
+    targetPort: 18001

@@ -5,12 +5,9 @@ buildMetadata:
   - managedByLabel
   - originAnnotations
 
-namespace: weechat
-commonLabels:
-  app.kubernetes.io/name: weechat
-
 configMapGenerator:
   - name: weechat
+    namespace: weechat
     files:
       - config/buflist.conf
       - config/fset.conf

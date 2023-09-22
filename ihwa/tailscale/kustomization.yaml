@@ -5,14 +5,6 @@ buildMetadata:
   - managedByLabel
   - originAnnotations
 
-namespace: tailscale
-commonLabels:
-  app.kubernetes.io/name: tailscale
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
-
 generators:
   - |
     apiVersion: viaduct.ai/v1

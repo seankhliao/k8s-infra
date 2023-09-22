@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - name: otlp
-      port: 4317
+  - name: otlp
+    port: 4317
   selector:
     app.kubernetes.io/name: otelcol
