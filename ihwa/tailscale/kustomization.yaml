@@ -7,7 +7,7 @@ buildMetadata:
 
 namespace: tailscale
 commonLabels:
-  app.kuberentes.io/name: tailscale
+  app.kubernetes.io/name: tailscale
 labels:
   - pairs:
       app.kubernetes.io/managed-by: kustomize

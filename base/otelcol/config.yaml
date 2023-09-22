@@ -3,19 +3,9 @@ receivers:
     protocols:
       grpc:
 
-  prometheus:
-    config:
-      scrape_configs:
-        - job_name: "otelcol"
-          scrape_interval: 5s
-          static_configs:
-            - targets:
-                - "0.0.0.0:8888"
-
-processors:
-
 exporters:
   logging:
+    # verbosity: detailed
 
   otlp/lightstep:
     endpoint: ingest.lightstep.com:443
@@ -45,24 +35,30 @@ service:
   pipelines:
     metrics:
       receivers:
-        - prometheus
         - otlp
       exporters:
-        - logging
+        # - logging
         - otlp/lightstep
 
     traces:
       receivers:
         - otlp
       exporters:
-        - logging
+        # - logging
         - otlp/lightstep
         - otlp/honeycomb
         - googlecloud
 
   telemetry:
     logs:
-      level: warn
+      level: info
     metrics:
       level: detailed
       address: 0.0.0.0:8888
+      readers:
+        - periodic:
+            interval: 5000
+            exporter:
+              otlp:
+                endpoint: 127.0.0.1:4317
+                protocol: grpc/protobuf

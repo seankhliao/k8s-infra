@@ -3,7 +3,7 @@ kind: Kustomization
 
 namespace: otelcol
 commonLabels:
-  app.kuberentes.io/name: otelcol
+  app.kubernetes.io/name: otelcol
 labels:
   - pairs:
       app.kubernetes.io/managed-by: kustomize

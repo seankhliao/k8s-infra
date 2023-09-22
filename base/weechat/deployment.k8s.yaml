@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weechat
+  labels:
+    app.kubernetes.io/name: weechat
+spec:
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: weechat
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: weechat
+    spec:
+      enableServiceLinks: false
+      initContainers:
+        - name: copy-config
+          image: docker.io/weechat/weechat
+          command:
+            - /usr/bin/bash
+            - -c
+            - |
+              mkdir -p /weechat-data/config /weechat-data/data /weechat-data/cache /weechat-data/runtime && \
+              cp /weechat-config/* /weechat-data/config/
+          volumeMounts:
+            - name: config
+              mountPath: /weechat-config
+            - name: data
+              mountPath: /weechat-data
+      containers:
+        - name: weechat
+          image: docker.io/weechat/weechat
+          command:
+            - /usr/bin/weechat-headless
+            - --dir
+            - /weechat-data/config:/weechat-data/data:/weechat-data/cache:/weechat-data/runtime
+            - --stdout
+          ports:
+            - name: irc
+              containerPort: 7992
+              hostPort: 7992
+            - name: weechat
+              containerPort: 7993
+              hostPort: 7993
+          volumeMounts:
+            - mountPath: /weechat-data
+              name: data
+            - mountPath: /weechat-secrets
+              name: secrets
+      volumes:
+        - name: config
+          configMap:
+            name: weechat
+        - name: data
+          persistentVolumeClaim:
+            claimName: weechat
+        - name: secrets
+          secret:
+            secretName: weechat

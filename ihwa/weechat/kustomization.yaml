@@ -5,20 +5,27 @@ buildMetadata:
   - managedByLabel
   - originAnnotations
 
-namespace: otelcol
+namespace: weechat
 commonLabels:
-  app.kubernetes.io/name: otelcol
-labels:
-  - pairs:
-      app.kubernetes.io/managed-by: kustomize
-    includeTemplates: true
+  app.kubernetes.io/name: weechat
+
+configMapGenerator:
+  - name: weechat
+    files:
+      - config/buflist.conf
+      - config/fset.conf
+      - config/irc.conf  
+      - config/logger.conf  
+      - config/relay.conf  
+      - config/sec.conf
+      - config/weechat.conf
 
 generators:
   - |
     apiVersion: viaduct.ai/v1
     kind: ksops
     metadata:
-      name: softserve
+      name: weechat
       annotations:
         config.kubernetes.io/function: |
           exec:
@@ -27,4 +34,4 @@ generators:
       - secrets.enc.k8s.yaml
 
 resources:
-  - ../../base/otelcol
+  - ../../base/weechat
