@@ -1,0 +1,57 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  app.kubernetes.io/name: tekton-triggers
+
+resources:
+  - admissionregistration_k8s_io_v1__mutatingwebhookconfiguration____webhook.triggers.tekton.dev.yaml
+  - admissionregistration_k8s_io_v1__validatingwebhookconfiguration____config.webhook.triggers.tekton.dev.yaml
+  - admissionregistration_k8s_io_v1__validatingwebhookconfiguration____validation.webhook.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____clusterinterceptors.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____clustertriggerbindings.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____eventlisteners.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____interceptors.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____triggerbindings.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____triggers.triggers.tekton.dev.yaml
+  - apiextensions_k8s_io_v1__customresourcedefinition____triggertemplates.triggers.tekton.dev.yaml
+  - apps_v1__deployment__tekton-pipelines__tekton-triggers-controller.yaml
+  - apps_v1__deployment__tekton-pipelines__tekton-triggers-core-interceptors.yaml
+  - apps_v1__deployment__tekton-pipelines__tekton-triggers-webhook.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-admin.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-aggregate-edit.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-aggregate-view.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-core-interceptors-secrets.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-core-interceptors.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-eventlistener-clusterroles.yaml
+  - rbac_authorization_k8s_io_v1__clusterrole____tekton-triggers-eventlistener-roles.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-triggers-controller-admin.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-triggers-core-interceptors-secrets.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-triggers-core-interceptors.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-triggers-webhook-admin.yaml
+  - rbac_authorization_k8s_io_v1__role__tekton-pipelines__tekton-triggers-admin-webhook.yaml
+  - rbac_authorization_k8s_io_v1__role__tekton-pipelines__tekton-triggers-core-interceptors.yaml
+  - rbac_authorization_k8s_io_v1__role__tekton-pipelines__tekton-triggers-info.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__tekton-pipelines__tekton-triggers-core-interceptors.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__tekton-pipelines__tekton-triggers-info.yaml
+  - rbac_authorization_k8s_io_v1__rolebinding__tekton-pipelines__tekton-triggers-webhook-admin.yaml
+  - triggers_tekton_dev_v1alpha1__clusterinterceptor____bitbucket.yaml
+  - triggers_tekton_dev_v1alpha1__clusterinterceptor____cel.yaml
+  - triggers_tekton_dev_v1alpha1__clusterinterceptor____github.yaml
+  - triggers_tekton_dev_v1alpha1__clusterinterceptor____gitlab.yaml
+  - triggers_tekton_dev_v1alpha1__clusterinterceptor____slack.yaml
+  - v1__configmap__tekton-pipelines__config-defaults-triggers.yaml
+  - v1__configmap__tekton-pipelines__config-leader-election-triggers-controller.yaml
+  - v1__configmap__tekton-pipelines__config-leader-election-triggers-webhook.yaml
+  - v1__configmap__tekton-pipelines__config-logging-triggers.yaml
+  - v1__configmap__tekton-pipelines__config-observability-triggers.yaml
+  - v1__configmap__tekton-pipelines__feature-flags-triggers.yaml
+  - v1__configmap__tekton-pipelines__triggers-info.yaml
+  - v1__secret__tekton-pipelines__tekton-triggers-core-interceptors-certs.yaml
+  - v1__secret__tekton-pipelines__triggers-webhook-certs.yaml
+  - v1__service__tekton-pipelines__tekton-triggers-controller.yaml
+  - v1__service__tekton-pipelines__tekton-triggers-core-interceptors.yaml
+  - v1__service__tekton-pipelines__tekton-triggers-webhook.yaml
+  - v1__serviceaccount__tekton-pipelines__tekton-triggers-controller.yaml
+  - v1__serviceaccount__tekton-pipelines__tekton-triggers-core-interceptors.yaml
+  - v1__serviceaccount__tekton-pipelines__tekton-triggers-webhook.yaml

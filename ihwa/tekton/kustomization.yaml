@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+buildMetadata:
+  - managedByLabel
+  - originAnnotations
+
+patches:
+  - target:
+      kind: ConfigMap
+      name: resolvers-feature-flags
+      namespace: tekton-pipelines-resolvers
+    patch: |
+      - op: replace
+        path: /data/enable-bundles-resolver
+        value: "false"
+      - op: replace
+        path: /data/enable-hub-resolver
+        value: "false"
+
+
+resources:
+  - ../../base/tekton-pipelines
+  - ../../base/tekton-triggers
