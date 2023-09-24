@@ -6,18 +6,22 @@ buildMetadata:
   - originAnnotations
 
 patches:
+  # - target:
+  #     kind: ConfigMap
+  #     name: resolvers-feature-flags
+  #     namespace: tekton-pipelines-resolvers
+  #   patch: |
+  #     - op: replace
+  #       path: /data/enable-bundles-resolver
+  #       value: "false"
   - target:
       kind: ConfigMap
-      name: resolvers-feature-flags
-      namespace: tekton-pipelines-resolvers
+      name: feature-flags
+      namespace: tekton-pipelines
     patch: |
       - op: replace
-        path: /data/enable-bundles-resolver
-        value: "false"
-      - op: replace
-        path: /data/enable-hub-resolver
-        value: "false"
-
+        path: /data/enable-api-fields
+        value: "alpha"
 
 resources:
   - ../../base/tekton-pipelines
