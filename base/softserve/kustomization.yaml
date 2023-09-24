@@ -8,3 +8,4 @@ commonLabels:
 resources:
   - apps_v1__deployment____softserve.yaml
   - v1__namespace____softerve.yaml
+  - v1__service____softserve.yaml
