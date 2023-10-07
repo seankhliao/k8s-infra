@@ -2,6 +2,10 @@ receivers:
   otlp:
     protocols:
       grpc:
+  jaeger:
+    protocols:
+      grpc:
+      thrift_http:
 
 exporters:
   logging:
@@ -43,6 +47,7 @@ service:
     traces:
       receivers:
         - otlp
+        - jaeger
       exporters:
         # - logging
         - otlp/lightstep
