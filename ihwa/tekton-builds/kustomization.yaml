@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+buildMetadata:
+  - managedByLabel
+  - originAnnotations
+
+namespace: tekton-builds
+commonLabels:
+  app.kubernetes.io/name: tekton-builds
+
+generators:
+  - |
+    apiVersion: viaduct.ai/v1
+    kind: ksops
+    metadata:
+      name: tekton-builds
+      annotations:
+        config.kubernetes.io/function: |
+          exec:
+            path: /opt/kustomize/ksops
+    files:
+      - secrets.enc.k8s.yaml
+
+resources:
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-builds-listener-cluster.yaml
+  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-builds-listener.yaml
+  - tekton_dev_v1__pipeline____go-library.yaml
+  - tekton_dev_v1__task____git-clone.yaml
+  - triggers_tekton_dev_v1beta1__eventlistener____listener.yaml
+  - triggers_tekton_dev_v1beta1__trigger____softserve-webhook.yaml
+  - v1__namespace____tekton-builds.yaml
+  - v1__serviceaccount____listener.yaml
+  - v1__serviceaccount____softserve-clone.yaml
