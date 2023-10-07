@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: zot
+commonLabels:
+  app.kubernetes.io/name: zot
+
+resources:
+  - apps_v1__deployment____zot.yaml
+  - v1__configmap____zot.yaml
+  - v1__namespace____zot.yaml
+  - v1__persistentvolumeclaim____zot.yaml
+  - v1__service____zot.yaml
