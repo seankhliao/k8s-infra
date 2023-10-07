@@ -22,6 +22,18 @@ patches:
       - op: replace
         path: /data/enable-api-fields
         value: "alpha"
+  - target:
+      kind: ConfigMap
+      name: config-tracing
+      namespace: tekton-pipelines
+    patch: |
+      - op: replace
+        path: /data/enabled
+        value: "true"
+      - op: replace
+        path: /data/endpoint
+        value: http://ingest.otelcol.svc.cluster.local:14268/api/traces
+
 
 resources:
   - ../../base/tekton-pipelines
