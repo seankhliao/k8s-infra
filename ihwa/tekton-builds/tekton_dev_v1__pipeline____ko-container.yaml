@@ -1,12 +1,14 @@
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
-  name: go-library
+  name: ko-container
 spec:
   displayName: Go Library
   description: |
     basic build / test / lints for a go module
   params:
+    - name: reponame
+      type: string
     - name: url
       type: string
       description: |
@@ -32,11 +34,14 @@ spec:
       workspaces:
         - name: output
           workspace: cloned-repo
-    - name: build-test
+    - name: ko-container
       runAfter:
         - fetch-source
       taskRef:
-        name: go-build-test
+        name: ko-container
+      params:
+        - name: reponame
+          value: $(params.reponame)
       workspaces:
         - name: module
           workspace: cloned-repo

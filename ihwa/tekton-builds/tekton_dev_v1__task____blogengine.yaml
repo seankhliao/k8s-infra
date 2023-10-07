@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: blogengine
+spec:
+  displayName: "Run blogengine"
+  description: |
+    build and upload a static website to firebase
+  stepTemplate:
+    workingDir: "$(workspaces.module.path)"
+    env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /var/run/secrets/google/sa.json
+    volumeMounts:
+      - name: gcpsa
+        mountPath: /var/run/secrets/google
+  steps:
+    - name: blogengine
+      image: ghcr.io/seankhliao/blogengine:latest
+  volumes:
+    - name: gcpsa
+      secret:
+        secretName: gcp-firebase
+  workspaces:
+    - name: module

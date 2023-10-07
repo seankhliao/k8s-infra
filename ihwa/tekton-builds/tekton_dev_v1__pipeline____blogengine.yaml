@@ -1,11 +1,11 @@
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
-  name: go-library
+  name: blogengine
 spec:
-  displayName: Go Library
+  displayName: blogengine
   description: |
-    basic build / test / lints for a go module
+    basic and publish a static site
   params:
     - name: url
       type: string
@@ -32,11 +32,11 @@ spec:
       workspaces:
         - name: output
           workspace: cloned-repo
-    - name: build-test
+    - name: publish
       runAfter:
         - fetch-source
       taskRef:
-        name: go-build-test
+        name: blogengine
       workspaces:
         - name: module
           workspace: cloned-repo

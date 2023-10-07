@@ -23,12 +23,20 @@ generators:
       - secrets.enc.k8s.yaml
 
 resources:
-  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-builds-listener-cluster.yaml
-  - rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-builds-listener.yaml
-  - tekton_dev_v1__pipeline____go-library.yaml
-  - tekton_dev_v1__task____git-clone.yaml
-  - triggers_tekton_dev_v1beta1__eventlistener____listener.yaml
-  - triggers_tekton_dev_v1beta1__trigger____softserve-webhook.yaml
-  - v1__namespace____tekton-builds.yaml
-  - v1__serviceaccount____listener.yaml
-  - v1__serviceaccount____softserve-clone.yaml
+- rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-builds-listener-cluster.yaml
+- rbac_authorization_k8s_io_v1__clusterrolebinding____tekton-builds-listener.yaml
+- tekton_dev_v1__pipeline____blogengine.yaml
+- tekton_dev_v1__pipeline____go-library.yaml
+- tekton_dev_v1__pipeline____ko-container.yaml
+- tekton_dev_v1__task____blogengine.yaml
+- tekton_dev_v1__task____git-clone.yaml
+- tekton_dev_v1__task____go-build-test.yaml
+- tekton_dev_v1__task____ko-container.yaml
+- triggers_tekton_dev_v1beta1__eventlistener____listener.yaml
+- triggers_tekton_dev_v1beta1__trigger____softserve-blogengine.yaml
+- triggers_tekton_dev_v1beta1__trigger____softserve-go-library.yaml
+- triggers_tekton_dev_v1beta1__trigger____softserve-ko-container.yaml
+- v1__namespace____tekton-builds.yaml
+- v1__serviceaccount____ghcr-publish.yaml
+- v1__serviceaccount____listener.yaml
+- v1__serviceaccount____softserve-clone.yaml

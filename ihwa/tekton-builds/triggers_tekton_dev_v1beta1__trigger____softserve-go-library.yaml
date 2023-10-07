@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
-  name: softserve-webhook
+  name: softserve-go-library
   labels:
     event-listener: listener
 spec:
@@ -10,7 +10,7 @@ spec:
         name: cel
       params:
         - name: "filter"
-          value: 'body.tektonPipeline != ""'
+          value: 'body.tektonPipeline == "go-library"'
         - name: "overlays"
           value:
             - key: repourl
@@ -27,8 +27,6 @@ spec:
       value: $(body.commit)
     - name: shortrev
       value: $(extensions.shortrev)
-    - name: pipeline
-      value: $(body.tektonPipeline)
   # stamp out objects
   template:
     spec:
@@ -45,7 +43,7 @@ spec:
             generateName: $(tt.params.reponame)-$(tt.params.shortrev)-
           spec:
             pipelineRef:
-              name: $(tt.params.pipeline)
+              name: go-library
             params:
               - name: revision
                 value: $(tt.params.revision)

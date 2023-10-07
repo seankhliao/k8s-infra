@@ -1,0 +1,56 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: ko-container
+spec:
+  displayName: "ko build"
+  description: |
+    build and test a go module with ko
+  params:
+    - name: reponame
+      type: string
+  stepTemplate:
+    image: "ghcr.io/seankhliao/go:tip-arm64"
+    workingDir: "$(workspaces.module.path)"
+    env:
+      - name: GOFLAGS
+        value: "-trimpath '-ldflags=-s -w' -buildvcs=false"
+      - name: CGO_ENABLED
+        value: "0"
+      - name: GOMODCACHE
+        value: /volumes/gomodcache
+      - name: GOCACHE
+        value: /volumes/gobuildcache
+      - name: GOPROXY
+        value: "http://goproxy.goproxy.svc.cluster.local,https://proxy.golang.org,direct"
+    volumeMounts:
+      - name: gomodcache
+        mountPath: /volumes/gomodcache
+      - name: gobuildcache
+        mountPath: /volumes/gobuildcache
+  steps:
+    - name: go-version
+      script: |
+        go version
+    - name: ko-version
+      script: |
+        ko version
+    - name: staticcheck
+      script: |
+        staticcheck ./...
+    - name: test
+      script: |
+        go test -vet=all ./...
+    - name: ko-build
+      env:
+        - name: KO_DOCKER_REPO
+          value: ghcr.io/seankhliao/$(params.reponame)
+      script: |
+        ko build --platform linux/amd64,linux/arm64 --bare --image-refs .images.txt
+  volumes:
+    - name: gomodcache
+      emptyDir: {}
+    - name: gobuildcache
+      emptyDir: {}
+  workspaces:
+    - name: module

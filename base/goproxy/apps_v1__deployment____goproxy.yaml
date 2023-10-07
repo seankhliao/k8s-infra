@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goproxy
+  labels:
+    app.kubernetes.io/name: goproxy
+spec:
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: goproxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: goproxy
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: goproxy
+          image: docker.io/goproxy/goproxy
+          args:
+            - -cacheDir=/data
+            - -listen=:8080
+            - -proxy=https://proxy.golang.org
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: goproxy
